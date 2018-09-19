@@ -95,7 +95,7 @@ if(isset($_GET['bookid']) && isset($_GET['deptid']) && isset($_GET['group']) && 
         $roleid = trim($_GET['roleid']);
         $active = 0;
         $event = 0;
-
+        
         $details = array(); 
         $details = explode("-",$subcode);
         $subject = $details[0];
@@ -103,10 +103,11 @@ if(isset($_GET['bookid']) && isset($_GET['deptid']) && isset($_GET['group']) && 
         $sec = $details[2];
         $sem = $details[4];
 
-        $sql7 = "select user_name from tbl_staff where user_id = ".$userid;
+        $sql7 = "select user_name, email from tbl_staff where user_id = ".$userid;
         $result7 = mysqli_query($DB,$sql7);
         $row7 = mysqli_fetch_array($result7);
         $username = $row7['user_name'];
+        $useremail = $row7['email'];
 
         $sql3 = "select t1.current_usage, t2.max_book from tbl_limit t1 inner join tbl_role t2 on t1.role_id = t2.role_id where user_id = ".$userid." and sub_code = '".$subject."' and group_name = '".$group."'";
         $result3 = mysqli_query($DB,$sql3);

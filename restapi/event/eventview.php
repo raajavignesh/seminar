@@ -15,6 +15,13 @@ $result = mysqli_query($DB,$sql);
 $json = array();
 $json["eventdetails"] = array();
 while($row = mysqli_fetch_array($result)) {
+    $date = $row['date'];
+    $disabled = 0;
+    $sql1 = "select temp_id from tbl_temp where date = '".$date."'";
+    $result1 = mysqli_query($DB,$sql1);
+    if($row1 = mysqli_fetch_array($result1)) {
+        $disabled = 1;
+    }
     $jsonArray= array(
     'capture' => true,
     'event_id' => $row['event_id'],
@@ -23,7 +30,8 @@ while($row = mysqli_fetch_array($result)) {
     'period' => $row['period'],
     'user_name' => $row['user_name'],
     'event_name' => $row['event_name'],
-    'description' => $row['description']
+    'description' => $row['description'],
+    'disabled' => $disabled
     );
     array_push($json["eventdetails"], $jsonArray);  
 }

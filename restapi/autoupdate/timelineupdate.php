@@ -3,6 +3,8 @@
 require_once('../config/dbconnection.php');
 
 $currenttime = date("Y-m-d");
+// $currenttime = "2018-09-20";
+
 // $sql1 = "select date from tbl_group";
 // $result1 = mysqli_query($DB,$sql1);
 // $current = "";
@@ -20,10 +22,13 @@ $sql2 = "select group_id from tbl_group where date = '".$currenttime."'";
 $result2 = mysqli_query($DB,$sql2);
 $row2 = mysqli_fetch_array($result2);
 $groupid = $row2['group_id'];
-//  echo $groupid;
+ echo $groupid;
 
 $sql3 = "select group_name, day_order, date from tbl_group where group_id >= ".$groupid." limit 5";
 $result3 = mysqli_query($DB,$sql3);
+
+$sql1 = "truncate table tbl_temp";
+mysqli_query($DB,$sql1);
 
 while($row3 = mysqli_fetch_array($result3)) {        
     $groupname = $row3['group_name'];        
@@ -93,7 +98,7 @@ if($dayorder == 1) {
         $roleid = $row1['role_id'];
         $sql2 = "select sub_code from tbl_workload where sub_type = 'T' and staff1 = '".$username."'";
         $result2 = mysqli_query($DB,$sql2);
-        $groupname = "2018-08-18";
+        // $groupname = "2018-08-18";
 
         while($row2 = mysqli_fetch_array($result2)) {
             $subcode = $row2['sub_code'];
@@ -110,7 +115,7 @@ $eventtime = $tempdaterow;
 
 $sql1 = "select dept_id, date, period, user_name, event_name, description from tbl_events where date = '".$eventtime."'";
 $result1 = mysqli_query($DB,$sql1);
-if($row1 = mysqli_fetch_array($result1)) {
+while($row1 = mysqli_fetch_array($result1)) {
     $deptid = $row1['dept_id']; 
     $date = $row1['date'];
     $period = $row1['period'];
@@ -150,13 +155,10 @@ if($row1 = mysqli_fetch_array($result1)) {
             $sql2 = "update tbl_timeline set ".$periods[$x]." = ".$bookid." where dept_id = ".$deptid." and group_name = '".$group."' and date = '".$date."' and day_order = ".$dayorder;
             mysqli_query($DB,$sql2);
         }
-        $json = array();
-        $json["response"] = array(  
-            "status" => true
-        );
-        echo json_encode($json); 
+
     }
 
 }
+
 
 ?>

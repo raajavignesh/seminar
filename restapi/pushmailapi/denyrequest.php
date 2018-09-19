@@ -19,6 +19,11 @@ if(isset($_GET['sender']) && isset($_GET['reciever']) && isset($_GET['date']) &&
     $sourceName = "";
     $destinationName = "";
 
+    $sql7 = "select email from tbl_staff where name = '".$sender."'";
+    $result7 = mysqli_query($DB,$sql7);
+    $row7 = mysqli_fetch_array($result7);
+    $useremail = $row7['email'];
+
     $message = '
             <!DOCTYPE html>
             <html lang="en">

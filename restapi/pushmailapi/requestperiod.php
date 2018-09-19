@@ -39,10 +39,11 @@ if(isset($_GET['token']) && isset($_GET['book_id']) && isset($_GET['request_msg'
     $description = $row2['description'];
     $active = $row2['active'];
 
-    $sql1 = "select name from tbl_staff where user_name = '".$recievername."'";
+    $sql1 = "select name, email from tbl_staff where user_name = '".$recievername."'";
     $result1 = mysqli_query($DB, $sql1);
     $row1 = mysqli_fetch_array($result1);
     $recievername = $row1['name'];
+    $useremail = $row1['email'];
 
     $message = '
             <!DOCTYPE html>
